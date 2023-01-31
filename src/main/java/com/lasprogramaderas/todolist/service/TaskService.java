@@ -33,5 +33,25 @@ public class TaskService {
 				.map(task -> ResponseEntity.ok().body(task))
 				.orElse(ResponseEntity.notFound().build());
 	}
+	
+	public ResponseEntity<Task> updateTaskById(Task task, Long id){
+		return taskrepository.findById(id)
+				.map(taskToUpdate ->{
+				taskToUpdate.setTitle(task.getTitle());
+				taskToUpdate.setDescription(task.getDescription());
+				taskToUpdate.setDeadLine(task.getDeadLine());
+				Task updated = taskrepository.save(taskToUpdate);
+				return ResponseEntity.ok().body(updated);
+				}).orElse(ResponseEntity.notFound().build()); 
+	}
+	
+	public ResponseEntity<Object> deleteById(Long id){
+		return taskrepository.findById(id)
+				.map(taskToDelete ->{
+					taskrepository.deleteById(id);
+					return ResponseEntity.noContent().build();
+				}).orElse(ResponseEntity.notFound().build());
+		
+	}
 
 }
