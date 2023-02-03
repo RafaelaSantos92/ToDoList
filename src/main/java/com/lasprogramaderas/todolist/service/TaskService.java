@@ -1,7 +1,6 @@
 package com.lasprogramaderas.todolist.service;
 
-import java.util.List;
-
+import lombok.AllArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -9,15 +8,14 @@ import org.springframework.stereotype.Service;
 import com.lasprogramaderas.todolist.model.Task;
 import com.lasprogramaderas.todolist.repository.TaskRepository;
 
-import lombok.AllArgsConstructor;
 
+import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class TaskService {
 	
-	
-	
+		
 	private TaskRepository taskrepository;
 	
 	
@@ -48,7 +46,7 @@ public class TaskService {
 	
 	public ResponseEntity<Object> deleteById(Long id){
 		return taskrepository.findById(id)
-				.map(taskToDelete ->{
+				.map(taskToDelete ->{	
 					taskrepository.deleteById(id);
 					return ResponseEntity.noContent().build();
 				}).orElse(ResponseEntity.notFound().build());

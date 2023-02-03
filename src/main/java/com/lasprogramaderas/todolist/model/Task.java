@@ -1,4 +1,12 @@
 package com.lasprogramaderas.todolist.model;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -9,13 +17,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Table(name="tasks")
@@ -29,7 +30,7 @@ public class Task {
 	
 	@Column (nullable=false)
 	private String title;
-	
+		
 	@Column(nullable=false)
 	private String description;
 	

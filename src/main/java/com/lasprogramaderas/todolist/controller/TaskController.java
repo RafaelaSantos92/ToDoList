@@ -2,7 +2,6 @@ package com.lasprogramaderas.todolist.controller;
 
 import java.util.List;
 
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,28 +25,25 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-
-
 @RestController
 @RequestMapping("/api/v1")
 @AllArgsConstructor
 @Slf4j
 @Tag(name = "Task", description="To Do List")
 public class TaskController {
-	
-	
-	
+		
 	TaskService taskservice;
 	
 	@PostMapping("/tasks")
 	@ResponseStatus(HttpStatus.CREATED)
 	@Operation(summary = "Criar uma nova tarefa")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "201", description = "Tarefa criada com sucesso",
+																				@ApiResponse(responseCode = "201", description = "Tarefa criada com sucesso",
 					content = @Content),
 			@ApiResponse(responseCode = "500", description = "Houve um erro ao criar uma nova tarefa",
 					content = @Content) })
 	public Task createTask(@RequestBody Task task) {
+		log.info("Criando uma nova tarefa com as informações [{}]", task);
 		return taskservice.createTask(task);
 	}
 	
@@ -60,6 +56,7 @@ public class TaskController {
 			@ApiResponse(responseCode = "500", description = "Houve um erro ao buscar uma nova tarefa",
 					content = @Content) })
 	public List<Task> getAllTasks(){
+		log.info("Listando todas as tarefas cadastradas");
 		return taskservice.listAllTasks();
 	}
 	
@@ -72,6 +69,7 @@ public class TaskController {
 			@ApiResponse(responseCode = "404", description = "Não foi localizada nenhuma tarefa com esse id",
 					content = @Content) })
 	public ResponseEntity<Task> getTaskById(@PathVariable (value = "id") Long id){
+		log.info("Buscando tarefa com o id [{}]", id);
 		return taskservice.findTaskById(id);
 	}
 	
@@ -84,6 +82,7 @@ public class TaskController {
 			@ApiResponse(responseCode = "404", description = "Houve um erro ao atualizar a tarefa",
 					content = @Content) })
 	public ResponseEntity<Task> getTaskById(@PathVariable (value = "id") Long id, @RequestBody Task task){
+		 log.info("Atualizando a tarefa com id [{}] as novas informações são : [{}]",id, task);
 		return taskservice.updateTaskById(task, id);
 	}
 	
@@ -96,6 +95,7 @@ public class TaskController {
 			@ApiResponse(responseCode = "404", description = "Não foi possível excluir a tarefa",
 					content = @Content) })
 	public ResponseEntity<Object> deleteTaskById(@PathVariable (value = "id") Long id){
+		 log.info("Excluindo tarefas com o id [{}]", id);
 		return taskservice.deleteById(id);
 	}
 }
